@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+ {% load static %} 
+<!-- 引入 Bootstrap -->
+<script type="text/javascript" src="{% static 'bootstrap/js/jquery-1.9.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+<style>
+select {
+	margin-left: 10px;
+	display: inline-block!important;
+	width: 70%!important;
+}
+
+.city-search {
+    margin-top: 20px;
+	margin-left: 15px;
+}
+
+.search_result {
+	width:300px;
+	margin-top: 20px;
+}
+
+.search_result * {
+	border: dashed 1px;
+}
+
+.search_result table tr td {
+	border: dashed 1px;
+}
+	
+</style>
+</head>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				{% if errmsg %}
+				<div id='errmsg' class="alert alert-danger">City Not Found !</div>
+				{% endif %}
+				<h3>
+					City Weather
+				</h3>
+				<div class="row">
+					<label class='city-search'>City：
+						<select class="form-control" id='seCity' name="city">
+							{% for city in city_list %}
+							<option value="{{ city }}">{{ city }}</option>
+							{% endfor %}
+						</select>
+					</label>
+				</div>
+				<div class="search_result">
+					<table class="table table-condensed">
+						<tbody>
+							<tr>
+								<td>City</td>
+								<td id='city_name'>{{ city_weather.city }}</td>
+							</tr>
+							<tr>
+								<td>Updated time</td>
+								<td id='update_time'>{{ city_weather.update_time }}</td>
+							</tr>
+							<tr>
+								<td>Weather</td>
+								<td id='weather'>{{ city_weather.weather }}</td>
+							</tr>
+							<tr>
+								<td>Temperature</td>
+								<td id='temperature'>{{ city_weather.tem }}°C</td>
+							</tr>
+							<tr>
+								<td>Wind</td>
+								<td id='wind'>{{ city_weather.win }} 米/秒</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>
