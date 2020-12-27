@@ -83,5 +83,10 @@ select {
 			</div>
 		</div>
 	</div>
+	<form id='chForm' role="form" action="/get_weather/" method="post">
+		<input type="hidden" id="chCity" name="chcity" class="form-control"/>
+	</form>
+	<input type="hidden" id="useCity" value="{{ use_city }}"/>
 </div>
+
 </html>

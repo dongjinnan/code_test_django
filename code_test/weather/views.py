@@ -18,28 +18,28 @@ def index(request):
         json_data = json.loads(data)
         if json_data['cod'] == 200:
             result = parse_res_data(json_data)
-            return render(request, 'index.html',{'city_list': city_list, 'city_weather': result})
+            return render(request, 'index.html',{'city_list': city_list, 'city_weather': result, 'use_city': city})
         else:
-            return render(request, 'index.html', {'city_list': city_list, 'city_weather': {}, 'errmsg': 'city不存在'})
+            return render(request, 'index.html', {'city_list': city_list, 'city_weather': {}, 'errmsg': 'city不存在', 'use_city': city})
     except Exception as e:
         print(e)
-        return render(request, 'index.html',{'city_list': city_list, 'city_weather': {}, 'errmsg': 'city不存在'})
+        return render(request, 'index.html',{'city_list': city_list, 'city_weather': {}, 'errmsg': 'city不存在', 'use_city': city})
 
 def get_weather(request):
-    city = request.GET.get("city")
+    city_list = get_city_list()
+    city = request.POST.get("chcity")
     url = URL % city
     try:
         data = r.urlopen(url).read().decode('utf-8')
         json_data = json.loads(data)
         if json_data['cod'] == 200:
             result = parse_res_data(json_data)
+            return render(request, 'index.html',{'city_list': city_list, 'city_weather': result, 'use_city': city})
         else:
-            result = {'errmsg': 'city不存在'}
+            return render(request, 'index.html',{'city_list': city_list, 'city_weather': {}, 'errmsg': 'city不存在', 'use_city': city})
     except Exception as e:
         print(e)
-        result = {'errmsg': 'city不存在'}
-    return HttpResponse(json.dumps(result, ensure_ascii=False))
-
+        return render(request, 'index.html', {'city_list': city_list, 'city_weather': {}, 'errmsg': 'city不存在', 'use_city': city})
 
 # 组装返回前台数据	
 def parse_res_data(data):
